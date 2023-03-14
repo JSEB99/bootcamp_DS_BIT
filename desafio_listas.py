@@ -2,6 +2,8 @@ lista1=[1,2,3]
 lista2=[4,5,6]
 lista1.append(456789)
 lista1.append("Hola Mundo")
+lista2.append("Hola y Adios")
+lista2.append(5555)
 lista3=lista1[:-1]
 lista4=lista2[1:-1]
 lista5=lista4+lista3
