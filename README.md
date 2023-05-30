@@ -28,4 +28,4 @@ Los programas utilizados se iran de acuerdo al siguiente plan de estudios:
 - Redes neuronales 2
 
 *Contacto: sebastian.mt99@gmail.com* ✉️
-###End
+
