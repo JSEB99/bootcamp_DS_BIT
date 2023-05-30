@@ -1,5 +1,5 @@
 # bootcamp_DS_BIT
-## Repositorio de prácticas relacionadas con el mundo de Data Science
+<p>Repositorio de prácticas relacionadas con el mundo de Data Science ofrecido por Bogota Institue of Technology</p>
 
 Los programas utilizados se iran de acuerdo al siguiente plan de estudios:
 
