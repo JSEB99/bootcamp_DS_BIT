@@ -50,7 +50,6 @@ ghi_diario = px.line(
 )
 ghi_diario.update_layout(title=dict(font=dict(family='JetBrains Mono',size=30)),
                             xaxis=dict(nticks=23))
-ghi_diario.write_html("ghi_diario.html")
 df["Fecha"] = df["Time"].dt.date
 df_fecha = df[["Fecha","GHI"]].groupby("Fecha").sum()
 df_fecha = df_fecha.reset_index()
@@ -67,7 +66,6 @@ fecha_ghi = px.line(
     template="plotly_dark"
 )
 fecha_ghi.update_layout(title=dict(font=dict(family='JetBrains Mono',size=30)))
-fecha_ghi.write_html("fecha_ghi.html")
 df_fecha["Month"] = df_fecha["Fecha"].dt.month
 df_fecha_month = df_fecha[["GHI","Month","Year"]].groupby(["Month","Year"]).mean()
 df_fecha_month.reset_index(inplace=True)
@@ -83,7 +81,6 @@ fecha_ghi_year = px.bar(
     barmode='group'
 )
 fecha_ghi_year.update_layout(title=dict(font=dict(family='JetBrains Mono',size=30)))
-fecha_ghi_year.write_html("fecha_ghi_year.html")
 df_fecha_month_DE = df_fecha[["GHI","Month","Year"]].groupby(["Month","Year"]).std()
 df_fecha_month_DE.reset_index(inplace=True)
 df_fecha_month["STD"] = df_fecha_month_DE["GHI"]
@@ -99,7 +96,6 @@ error_bar = px.bar(
     barmode='group'
 )
 error_bar.update_layout(title=dict(font=dict(family='JetBrains Mono',size=30)))
-error_bar.write_html("error_bar.html")
 df_climate = df[["Time","temp","rain_1h","clouds_all","GHI","dayLength","hour","month","snow_1h"]]
 df_climate["Fecha"] = df_climate["Time"].dt.date
 df_climate["Horario"] = df_climate["Time"].dt.time
@@ -117,7 +113,6 @@ dayduration = px.box(
     title="Duración del día durante el año"
 )
 dayduration.update_layout(title=dict(font=dict(family='JetBrains Mono',size=30)))
-dayduration.write_html("dayduration.html")
 df_fecha["HSP"] = round(df_fecha["GHI"]/1000,2)
 df_fecha["Year"] = df_fecha["Fecha"].dt.year
 df_fecha["Year"] = df_fecha["Year"].astype(str)
@@ -136,7 +131,6 @@ HSP_ghi = px.bar(
     barmode='group'
 )
 HSP_ghi.update_layout(title=dict(font=dict(family='JetBrains Mono',size=30)))
-HSP_ghi.write_html("HSP_ghi.html")
 df_climate["week"]=df_climate["Time"].dt.weekofyear
 df_climate_clouds = df_climate[["clouds_all","week"]].groupby("week").mean()
 nublaje = px.line(
@@ -148,7 +142,6 @@ nublaje = px.line(
     template="plotly_dark"
 )
 nublaje.update_layout(title=dict(font=dict(family='JetBrains Mono',size=30)))
-nublaje.write_html("nublaje.html")
 df_climate["Day"]=df_climate["Time"].dt.day_of_year
 df_climate_rain_snow = df_climate[["rain_1h","snow_1h","Day","Year"]].groupby(["Year","Day"]).max()
 df_climate_rain_snow.reset_index(inplace=True)
@@ -165,7 +158,6 @@ lluvias = px.bar(
     barmode="overlay"
 )
 lluvias.update_layout(title=dict(font=dict(family='JetBrains Mono',size=30)))
-lluvias.write_html("lluvias.html")
 Nieves = px.bar(
     data_frame=df_climate_rain_snow,
     x="Day",
@@ -178,7 +170,6 @@ Nieves = px.bar(
     barmode="overlay"
 )
 Nieves.update_layout(title=dict(font=dict(family='JetBrains Mono',size=30)))
-Nieves.write_html("Nieves.html")
 df_climate_temp = df_climate[["month","temp","Year"]].groupby(["Year","month"]).max()
 df_climate_temp.reset_index(inplace=True)
 df_climate_temp["GHI"]=df_fecha_month["GHI"]
@@ -192,7 +183,6 @@ temp = px.line(
     template="plotly_dark",
 )
 temp.update_layout(title=dict(font=dict(family='JetBrains Mono',size=30)))
-temp.write_html("temp.html")
 tempGHI = px.scatter(
     data_frame=df_climate_temp,
     x="temp",
@@ -205,7 +195,6 @@ tempGHI = px.scatter(
     labels={"month":"Mes","GHI":"Irradiancia Horizontal Global","temp":"Temperatura °C","Year":"Año"}
 )
 tempGHI.update_layout(title=dict(font=dict(family='JetBrains Mono',size=30)))
-tempGHI.write_html("tempGHI.html")
 df_energy = df[["Energy delta[Wh]","temp","Time","GHI","hour","month"]]
 df_energy["Horario"] = df_energy["Time"].dt.time
 df_energy["Fecha"] = df_energy["Time"].dt.date
@@ -229,7 +218,6 @@ relation_byDate = px.scatter_3d(
     labels={"Energy delta[Wh]":"Consumo energético diario [Wh]","GHI":"Irradiancia Horizontal Global","temp":"Temperatura °C","Year":"Año"}
 )
 relation_byDate.update_layout(title=dict(font=dict(family='JetBrains Mono',size=20)))
-relation_byDate.write_html("relation_byDate.html")
 relation_byHour_E = px.scatter(
     data_frame=df_energy,
     y="Energy delta[Wh]",
@@ -243,7 +231,6 @@ relation_byHour_E = px.scatter(
             "month":"Mes"}
 )
 relation_byHour_E.update_layout(title=dict(font=dict(family='JetBrains Mono',size=20)))
-relation_byHour_E.write_html("relation_byHour_E.html")
 relation_byHour_T = px.scatter(
     data_frame=df_energy,
     y="temp",
@@ -257,7 +244,6 @@ relation_byHour_T = px.scatter(
             "month":"Mes"}
 )
 relation_byHour_T.update_layout(title=dict(font=dict(family='JetBrains Mono',size=20)))
-relation_byHour_T.write_html("relation_byHour_T.html")
 relation_byHour_G = px.scatter(
     data_frame=df_energy,
     y="GHI",
@@ -271,7 +257,6 @@ relation_byHour_G = px.scatter(
             "month":"Mes"}
 )
 relation_byHour_G.update_layout(title=dict(font=dict(family='JetBrains Mono',size=20)))
-relation_byHour_G.write_html("relation_byHour_G.html")
 df_air = df[["wind_speed","month","Time"]]
 df_air["Year"] = df["Time"].dt.year
 df_air_2 = df_air[["wind_speed","month","Year"]].groupby(["month","Year"]).max()
@@ -288,7 +273,6 @@ air_speed = px.bar(
     barmode="group"
 )
 air_speed.update_layout(title=dict(font=dict(family='JetBrains Mono',size=20)))
-air_speed.write_html("air_speed.html")
 
 data = df
 data['Fecha'] = data['Time'].dt.date
@@ -408,7 +392,6 @@ temp_2 = px.line(
     labels={"temperature_2m":"Temperatura °C","Year":"Año"}
     )
 temp_2.update_layout(title=dict(font=dict(family='JetBrains Mono',size=20)))
-temp_2.write_html("temp_2.html")
 
 dt_Irr = dt[["Day","direct_radiation","Year"]].groupby(["Day","Year"]).sum()
 dt_Irr.reset_index(inplace=True)
@@ -422,7 +405,6 @@ Irr = px.line(
     labels={"direct_radiation":"Radiación directa W/m^2","Year":"Año","Day":"día"}
     )
 Irr.update_layout(title=dict(font=dict(family='JetBrains Mono',size=20)))
-Irr.write_html("Irr.html")
 
 dt_Irr_d = dt[["Day","diffuse_radiation","Year"]].groupby(["Day","Year"]).sum()
 dt_Irr_d.reset_index(inplace=True)
@@ -438,7 +420,6 @@ Irr_t = px.line(
     labels={"GHI":"Irradiación Horizontal Global","Year":"Año","Day":"día"}
     )
 Irr_t.update_layout(title=dict(font=dict(family='JetBrains Mono',size=20)))
-Irr_t.write_html("Irr_t.html")
 
 mensual_image = Image.open("c:/Users/Usuario/Desktop/bootcamp_DS_BIT/Vis/env/mensual.png")
 decomp_image = Image.open("c:/Users/Usuario/Desktop/bootcamp_DS_BIT/Vis/env/decomp.png")
